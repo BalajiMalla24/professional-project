@@ -2,24 +2,27 @@ import mongoose from "mongoose";
 // import express from "express";
 // import { DB_NAME } from "./constants.js";
 import connectdb from "./db/index.js";
+import { app } from "./app.js";
 import dotenv from "dotenv";
-const app = express();
+
+
+
 dotenv.config({
-    path:'./env'
+    path: './.env'
 })
 connectdb()
-.then(
-    app.listen(process.env.PORT || 8000 , (req,res)=>{
-       res.send(`server listening at port:${process.env.PORT}`)
-    }),
-    app.on("error" , (error)=>{
-        console.log("Err:" , error);
-        throw error;
+    .then(
+        app.listen(process.env.PORT || 8000, (req, res) => {
+            console.log(`server listening at port:${process.env.PORT}`)
+        }),
+        app.on("error", (error) => {
+            console.log("Err:", error);
+            throw error;
+        })
+    )
+    .catch((error) => {
+        console.log("Failed connecting to the database", error)
     })
-)
-.catch((error)=>{
-    console.log("Failed connecting to the database" , error)
-})
 
 
 

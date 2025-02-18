@@ -1,5 +1,6 @@
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import express from "express";
 const app = express()
 
 app.use(cors({
@@ -9,7 +10,7 @@ app.use(cors({
 
 //json body
 app.use(express.json({limit:"16kb"}))
-
+app.use(cookieParser())
 //data from url
 app.use(express.urlencoded({
     limit:"16kb",
@@ -18,6 +19,7 @@ app.use(express.urlencoded({
 //data file uploading
 app.use(express.static("public"))
 
-
-
-export default app
+//routes import
+import { userRoutes } from "./routes/register.routes.js";
+app.use("/api/v1/users" , userRoutes)
+export {app}
